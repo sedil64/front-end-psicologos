@@ -1,4 +1,3 @@
-import React from 'react';
 import { createPortal } from 'react-dom';
 
 interface SuccessModalProps {
@@ -21,7 +20,7 @@ export default function SuccessModal({
           ¡Registro exitoso!
         </h3>
         <p className="mb-6 text-center">
-          Tu cuenta de psicólogo ha sido creada correctamente.
+          Tu cuenta ha sido creada correctamente.
         </p>
         <div className="flex justify-around">
           <button

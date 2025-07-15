@@ -21,7 +21,7 @@ export default function Home() {
             Iniciar sesión
           </Link>
           <Link
-            to="/register"
+            to="/register/patient"
             className="px-6 py-3 border border-teal-600 text-teal-600 rounded-lg font-semibold hover:bg-teal-600 hover:text-white transition"
           >
             Registrarse

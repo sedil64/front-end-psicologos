@@ -1,5 +1,5 @@
 // src/pages/PsychologistDirectory.tsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { usePsicologos } from '../hooks/usePsicologos';
 import type { Psicologo, Cita } from '../types';
 import PsychologistCard from '../components/PsychologistCard';

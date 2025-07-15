@@ -15,7 +15,7 @@ export default function Header() {
         {!isAuthenticated ? (
           <>
             <Link to="/login" className="hover:underline">Ingresar</Link>
-            <Link to="/register" className="hover:underline">Registrarse</Link>
+            <Link to="/register/patient" className="hover:underline">Registrarse</Link>
           </>
         ) : (
           <>

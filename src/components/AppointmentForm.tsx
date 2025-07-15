@@ -1,5 +1,3 @@
-// src/components/AppointmentForm.tsx
-import React from 'react';
 import { useForm } from 'react-hook-form';
 import type { Psicologo, Cita } from '../types';
 import axiosInstance from '../api/axios';
@@ -24,7 +22,11 @@ export default function AppointmentForm({
   onClose,
   onSuccess,
 }: Props) {
-  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormValues>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<FormValues>();
   const { userId } = useAuth();
 
   const onSubmit = async (data: FormValues) => {
@@ -38,7 +40,10 @@ export default function AppointmentForm({
       onSuccess(res.data);
       onClose();
     } catch (err) {
-      console.error(err);
+      console.error(
+        'Error al agendar cita:',
+        err instanceof Error ? err.message : err,
+      );
       alert('No se pudo agendar la cita');
     }
   };
@@ -58,7 +63,9 @@ export default function AppointmentForm({
               {...register('nombreCliente', { required: true })}
               className="w-full border px-2 py-1 rounded"
             />
-            {errors.nombreCliente && <p className="text-red-500 text-xs">Requerido</p>}
+            {errors.nombreCliente && (
+              <p className="text-red-500 text-xs">Requerido</p>
+            )}
           </div>
           <div>
             <label className="block text-sm">Fecha</label>
@@ -67,7 +74,9 @@ export default function AppointmentForm({
               {...register('fecha', { required: true })}
               className="w-full border px-2 py-1 rounded"
             />
-            {errors.fecha && <p className="text-red-500 text-xs">Requerido</p>}
+            {errors.fecha && (
+              <p className="text-red-500 text-xs">Requerido</p>
+            )}
           </div>
           <div>
             <label className="block text-sm">Hora</label>
@@ -76,7 +85,9 @@ export default function AppointmentForm({
               {...register('hora', { required: true })}
               className="w-full border px-2 py-1 rounded"
             />
-            {errors.hora && <p className="text-red-500 text-xs">Requerido</p>}
+            {errors.hora && (
+              <p className="text-red-500 text-xs">Requerido</p>
+            )}
           </div>
           <div className="flex justify-end space-x-2">
             <button

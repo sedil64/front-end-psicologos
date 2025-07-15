@@ -1,4 +1,3 @@
-// src/types/index.ts
 export interface Psicologo {
   id: number;
   nombres: string;
@@ -15,4 +14,20 @@ export interface Cita {
   estado: 'pendiente' | 'confirmada' | 'cancelada';
   psicologo: Psicologo;
   pacienteId: number;
+}
+
+export interface Paciente {
+  id: number;
+  nombres: string;
+  apellidos: string;
+  identificacion: string;
+  fechaNacimiento: string; // ISO
+  genero?: 'MASCULINO' | 'FEMENINO' | 'OTRO';
+  telefono: string;
+  telefonoEmergencia?: string;
+  correoElectronico: string;
+  direccion?: string;
+  edad: number;
+  antecedentesClinicos?: string;
+  activo: boolean;
 }

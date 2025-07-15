@@ -1,10 +1,10 @@
-import React, {
+import {
   createContext,
   useContext,
   useState,
   useEffect,
-  ReactNode,
 } from 'react';
+import type { ReactNode } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import axiosInstance from '../api/axios';
 
@@ -28,13 +28,10 @@ interface AuthState {
 const AuthContext = createContext<AuthState | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [token, setToken]   = useState<string | null>(
-    () => localStorage.getItem('token'),
-  );
-  const [role, setRole]     = useState<Role | null>(null);
+  const [token, setToken] = useState<string | null>(() => localStorage.getItem('token'));
+  const [role, setRole] = useState<Role | null>(null);
   const [userId, setUserId] = useState<number | null>(null);
 
-  // Al montar, si hay token en localStorage, decodifícalo
   useEffect(() => {
     if (!token) return;
     try {
@@ -42,24 +39,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setRole(role);
       setUserId(sub);
     } catch {
-      // token inválido: limpia
       localStorage.removeItem('token');
       setToken(null);
     }
   }, [token]);
 
-  const login = async ({
-    email,
-    password,
-  }: {
-    email: string;
-    password: string;
-  }): Promise<boolean> => {
+  const login = async ({ email, password }: { email: string; password: string }): Promise<boolean> => {
     try {
-      const res = await axiosInstance.post<{ access_token: string }>(
-        '/auth/login',
-        { email, password },
-      );
+      const res = await axiosInstance.post<{ access_token: string }>('/auth/login', { email, password });
       const accessToken = res.data.access_token;
       localStorage.setItem('token', accessToken);
       setToken(accessToken);
@@ -84,9 +71,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const isAuthenticated = Boolean(token);
 
   return (
-    <AuthContext.Provider
-      value={{ token, role, userId, isAuthenticated, login, logout }}
-    >
+    <AuthContext.Provider value={{ token, role, userId, isAuthenticated, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
@@ -94,8 +79,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 export function useAuth() {
   const ctx = useContext(AuthContext);
-  if (!ctx) {
-    throw new Error('useAuth must be used within AuthProvider');
-  }
+  if (!ctx) throw new Error('useAuth must be used within AuthProvider');
   return ctx;
 }

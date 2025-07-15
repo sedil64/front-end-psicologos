@@ -8,7 +8,6 @@ import RequireAuth from './components/RequireAuth';
 import Home                 from './pages/Home';
 import Login                from './pages/Login';
 import Services             from './pages/Services';
-import Register             from './pages/Register';
 import JoinUsPage           from './pages/JoinUsPage';
 import RegisterPsychologist from './pages/RegisterPsychologist';
 import RegisterPatient      from './pages/RegisterPatient';
@@ -29,7 +28,6 @@ export default function AppRoutes() {
       <Route path="/"               element={<Home />} />
       <Route path="/login"          element={<Login />} />
       <Route path="/services"       element={<Services />} />
-      <Route path="/register"       element={<Register />} />
       <Route path="/register/psychologist" element={<RegisterPsychologist />} />
       <Route path="/register/patient"      element={<RegisterPatient />} />
       <Route path="/join-us"               element={<JoinUsPage />} />

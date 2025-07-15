@@ -1,5 +1,3 @@
-// src/components/PsychologistCard.tsx
-import React from 'react';
 import type { Psicologo } from '../types';
 
 interface Props {
