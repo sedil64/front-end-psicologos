@@ -19,9 +19,21 @@ export default function Header() {
           </>
         ) : (
           <>
-            {role === 'admin' && <Link to="/admin/dashboard" className="hover:underline">Panel Admin</Link>}
-            {role === 'psychologist' && <Link to="/psychologist/panel" className="hover:underline">Panel Psicólogo</Link>}
-            {role === 'patient' && <Link to="/patient/home" className="hover:underline">Inicio Paciente</Link>}
+            {role === 'admin' && (
+              <Link to="/admin/dashboard" className="hover:underline">
+                Panel Admin
+              </Link>
+            )}
+            {role === 'psicologo' && (
+              <Link to="/psychologist/panel" className="hover:underline">
+                Panel Psicólogo
+              </Link>
+            )}
+            {role === 'paciente' && (
+              <Link to="/patient/home" className="hover:underline">
+                Inicio Paciente
+              </Link>
+            )}
 
             <button
               onClick={logout}

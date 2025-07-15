@@ -1,4 +1,3 @@
-// src/pages/RegisterPsychologist.tsx
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, Link } from 'react-router-dom';
@@ -7,25 +6,10 @@ import { useAuth } from '../context/AuthContext';
 import SuccessModal from '../components/SuccessModal';
 import { psychologistRegisterSchema } from '../schemas/psychologistRegister.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 
-type FormData = {
-  nombres: string;
-  apellidos: string;
-  identificacion: string;
-  fechaNacimiento: Date;
-  genero?: 'Masculino' | 'Femenino' | 'No binario' | 'Otro' | 'Prefiero no decir';
-  telefono: string;
-  telefonoEmergencia?: string;
-  correoElectronico: string;
-  direccion?: string;
-  licencia: string;
-  especialidad: string;
-  universidad?: string;
-  experiencia?: number;
-  certificaciones?: string;
-  email: string;
-  password: string;
-};
+// 🧠 Inferimos el tipo automáticamente desde el schema
+type FormData = z.infer<typeof psychologistRegisterSchema>;
 
 export default function RegisterPsychologist() {
   const navigate = useNavigate();
@@ -45,7 +29,7 @@ export default function RegisterPsychologist() {
       const payload = {
         ...data,
         role: 'psicologo' as const,
-        fechaNacimiento: data.fechaNacimiento.toISOString(),
+        fechaNacimiento: new Date(data.fechaNacimiento).toISOString(), // ✅ convertir string a ISO
       };
 
       await axiosInstance.post('/psicologos/register', payload);

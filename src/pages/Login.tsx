@@ -13,16 +13,16 @@ export default function Login() {
     e.preventDefault();
     setError('');
 
-    const success = await login({email, password});
+    const success = await login({ email, password });
     if (!success) {
       setError('Credenciales inválidas. Intenta nuevamente.');
       return;
     }
 
-    // Redirección según rol
+    // Redirección según rol usando valores reales del enum del backend
     if (role === 'admin') navigate('/admin/dashboard');
-    else if (role === 'psychologist') navigate('/psychologist/panel');
-    else if (role === 'patient') navigate('/patient/home');
+    else if (role === 'psicologo') navigate('/psychologist/panel');
+    else if (role === 'paciente') navigate('/patient/home');
     else navigate('/');
   };
 
@@ -32,10 +32,14 @@ export default function Login() {
         onSubmit={handleSubmit}
         className="bg-white shadow-md rounded-lg p-8 w-full max-w-md"
       >
-        <h2 className="text-2xl font-bold text-teal-800 text-center mb-6">Iniciar sesión</h2>
+        <h2 className="text-2xl font-bold text-teal-800 text-center mb-6">
+          Iniciar sesión
+        </h2>
 
         <div className="mb-4">
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700">Correo electrónico</label>
+          <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+            Correo electrónico
+          </label>
           <input
             id="email"
             type="email"
@@ -47,7 +51,9 @@ export default function Login() {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="password" className="block text-sm font-medium text-gray-700">Contraseña</label>
+          <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+            Contraseña
+          </label>
           <input
             id="password"
             type="password"
@@ -58,9 +64,7 @@ export default function Login() {
           />
         </div>
 
-        {error && (
-          <p className="text-red-600 text-sm mb-4">{error}</p>
-        )}
+        {error && <p className="text-red-600 text-sm mb-4">{error}</p>}
 
         <button
           type="submit"
