@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, Link } from 'react-router-dom';
-import axiosInstance from '../api/axios';
+import type {axiosInstance} from '../api/axios';
 import { useAuth } from '../context/AuthContext';
 import SuccessModal from '../components/SuccessModal';
 import { psychologistRegisterSchema } from '../schemas/psychologistRegister.schema';

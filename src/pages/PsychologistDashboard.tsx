@@ -1,5 +1,5 @@
 import  { useEffect, useState } from 'react';
-import axiosInstance from '../api/axios';
+import type {axiosInstance} from '../api/axios';
 
 interface Cita {
   id: number;

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axiosInstance from '../api/axios';
+import type { AxiosResponse } from 'axios';
 import type { Psicologo } from '../types';
 import type { AxiosResponse } from 'axios';
 
