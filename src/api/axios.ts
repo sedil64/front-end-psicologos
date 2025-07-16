@@ -1,7 +1,8 @@
-import axios, { AxiosRequestConfig, AxiosError } from 'axios';
+import axios from 'axios'; // Esta es la línea que faltaba
+import type { InternalAxiosRequestConfig, AxiosError } from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL, // o tu URL fija
+  baseURL: import.meta.env.VITE_API_URL, 
   headers: {
     'Content-Type': 'application/json',
   },
@@ -9,7 +10,7 @@ const axiosInstance = axios.create({
 
 // Interceptor de solicitud
 axiosInstance.interceptors.request.use(
-  (config: AxiosRequestConfig) => {
+  (config: InternalAxiosRequestConfig) => {
     const token = localStorage.getItem('token');
     if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -28,8 +29,8 @@ axiosInstance.interceptors.response.use(
   (error: AxiosError) => {
     if (error.response?.status === 401) {
       console.warn('Token inválido o expirado');
-      // Puedes redirigir al login o limpiar el token si quieres
       localStorage.removeItem('token');
+      // Aquí podrías redirigir al login si es necesario
     }
     return Promise.reject(error);
   }
