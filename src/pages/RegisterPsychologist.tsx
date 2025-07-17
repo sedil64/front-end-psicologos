@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, Link } from 'react-router-dom';
-import axiosInstance from '../api/axios'; // ✅ Corrección aquí
+import axiosInstance from '../api/axios'; // ✅ Importación correcta
 import { useAuth } from '../context/AuthContext';
 import SuccessModal from '../components/SuccessModal';
 import { psychologistRegisterSchema } from '../schemas/psychologistRegister.schema';
@@ -66,7 +66,23 @@ export default function RegisterPsychologist() {
         onSubmit={handleSubmit(onSubmit)}
         className="grid grid-cols-1 md:grid-cols-2 gap-6"
       >
-        {[...].map(({ name, label, type = 'text' }) => (
+        {[
+          { name: 'nombres', label: 'Nombres' },
+          { name: 'apellidos', label: 'Apellidos' },
+          { name: 'email', label: 'Email', type: 'email' },
+          { name: 'password', label: 'Contraseña', type: 'password' },
+          { name: 'identificacion', label: 'Identificación' },
+          { name: 'fechaNacimiento', label: 'Fecha de Nacimiento', type: 'date' },
+          { name: 'telefono', label: 'Teléfono' },
+          { name: 'telefonoEmergencia', label: 'Teléfono emergencia' },
+          { name: 'correoElectronico', label: 'Correo personal', type: 'email' },
+          { name: 'direccion', label: 'Dirección' },
+          { name: 'licencia', label: 'Licencia' },
+          { name: 'especialidad', label: 'Especialidad' },
+          { name: 'universidad', label: 'Universidad' },
+          { name: 'experiencia', label: 'Años de experiencia', type: 'number' },
+          { name: 'certificaciones', label: 'Certificaciones' },
+        ].map(({ name, label, type = 'text' }) => (
           <div key={name}>
             <label className="block mb-1 text-sm font-medium">{label}</label>
             <input
@@ -89,6 +105,7 @@ export default function RegisterPsychologist() {
             <option value="Otro">Otro</option>
             <option value="Prefiero no decir">Prefiero no decir</option>
           </select>
+          {errorText('genero')}
         </div>
 
         <button
