@@ -1,26 +1,51 @@
-import { ref, onMounted } from 'vue';
-import axiosInstance from '@/api/axios'; // Asegúrate de que esta ruta sea correcta
+import { useEffect, useState } from 'react';
+import axiosInstance from '../api/axios'; // ✅ ruta relativa correcta
+import type { AxiosResponse } from 'axios'; // ✅ opcional, o puedes dejar que infiera
 
-// Si realmente necesitas el tipo de respuesta:
-import type { AxiosResponse } from 'axios';
+interface Cita {
+  id: number;
+  nombreCliente: string;
+  fecha: string;
+  hora: string;
+  estado: string;
+}
+
+interface Paciente {
+  id: number;
+  nombreCompleto: string;
+  email: string;
+}
 
 export function usePsicologos() {
-  const psicologos = ref([]);
-  const error = ref<string | null>(null);
+  const [citas, setCitas] = useState<Cita[]>([]);
+  const [pacientes, setPacientes] = useState<Paciente[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const fetchPsicologos = async () => {
-    try {
-      const response: AxiosResponse = await axiosInstance.get('/psicologos');
-      psicologos.value = response.data;
-    } catch (err: any) {
-      error.value = err?.message || 'Error al cargar los psicólogos';
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const [citasRes, pacientesRes] = await Promise.all([
+          axiosInstance.get<Cita[]>('/psicologos/me/citas'),
+          axiosInstance.get<Paciente[]>('/psicologos/me/pacientes'),
+        ]);
+        setCitas(citasRes.data);
+        setPacientes(pacientesRes.data);
+      } catch (err: any) {
+        console.error('Error al cargar datos de psicólogos:', err);
+        setError('Error al cargar los datos');
+      } finally {
+        setLoading(false);
+      }
     }
-  };
 
-  onMounted(fetchPsicologos);
+    fetchData();
+  }, []);
 
   return {
-    psicologos,
+    citas,
+    pacientes,
+    loading,
     error,
   };
 }

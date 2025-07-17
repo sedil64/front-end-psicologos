@@ -5,7 +5,7 @@ import PsychologistCard from '../components/PsychologistCard';
 import AppointmentForm from '../components/AppointmentForm';
 
 export default function PsychologistDirectory() {
-  const { data: psicologos, loading, error } = usePsicologos();
+  const { psicologos, loading, error } = usePsicologos(); // ✅ destructuración correcta
   const [selected, setSelected] = useState<Psicologo | null>(null);
   const [citas, setCitas] = useState<Cita[]>([]);
 
@@ -24,8 +24,9 @@ export default function PsychologistDirectory() {
   return (
     <div className="p-6 max-w-4xl mx-auto">
       <h1 className="text-3xl font-bold mb-6 text-center">Nuestros Psicólogos</h1>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {psicologos.map((psico) => (
+        {psicologos.map((psico: Psicologo) => ( // ✅ tipado explícito aquí
           <PsychologistCard
             key={psico.id}
             psicologo={psico}
