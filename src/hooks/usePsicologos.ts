@@ -1,41 +1,26 @@
-import { useState, useEffect } from 'react';
-import type { AxiosResponse } from 'axios';
-import type { Psicologo } from '../types';
+import { ref, onMounted } from 'vue';
+import axiosInstance from '@/api/axios'; // Asegúrate de que esta ruta sea correcta
+
+// Si realmente necesitas el tipo de respuesta:
 import type { AxiosResponse } from 'axios';
 
 export function usePsicologos() {
-  const [data, setData] = useState<Psicologo[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const psicologos = ref([]);
+  const error = ref<string | null>(null);
 
-  useEffect(() => {
-    let isMounted = true; // para evitar setState en componente desmontado
+  const fetchPsicologos = async () => {
+    try {
+      const response: AxiosResponse = await axiosInstance.get('/psicologos');
+      psicologos.value = response.data;
+    } catch (err: any) {
+      error.value = err?.message || 'Error al cargar los psicólogos';
+    }
+  };
 
-    const fetchPsicologos = async () => {
-      try {
-        const res: AxiosResponse<Psicologo[]> = await axiosInstance.get('/psicologos');
-        if (isMounted) {
-          setData(res.data);
-          setError(null);
-        }
-      } catch (err: unknown) {
-        if (isMounted) {
-          const message =
-            err instanceof Error ? err.message : 'Error al cargar psicólogos';
-          setError(message);
-        }
-      } finally {
-        if (isMounted) setLoading(false);
-      }
-    };
+  onMounted(fetchPsicologos);
 
-    fetchPsicologos();
-
-    // Cleanup para prevenir memory leak
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-
-  return { data, loading, error };
+  return {
+    psicologos,
+    error,
+  };
 }

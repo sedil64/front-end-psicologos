@@ -1,8 +1,8 @@
 import axios from 'axios';
-import type { AxiosRequestConfig, AxiosError } from 'axios';
 
+// Crear instancia de Axios
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL, 
+  baseURL: import.meta.env.VITE_API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -10,22 +10,23 @@ const axiosInstance = axios.create({
 
 // Interceptor de solicitud
 axiosInstance.interceptors.request.use(
-  (config: AxiosRequestConfig) => {
+  (config) => {
     const token = localStorage.getItem('token');
     if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
-  (error: AxiosError) => {
-    console.error('Error en interceptor de solicitud:', error.message);
+  (error) => {
+    console.error('Error en interceptor de solicitud:', error?.message || error);
     return Promise.reject(error);
   }
 );
 
+// Interceptor de respuesta
 axiosInstance.interceptors.response.use(
   response => response,
-  (error: AxiosError) => {
+  (error) => {
     if (error.response?.status === 401) {
       console.warn('Token inválido o expirado');
       localStorage.removeItem('token');

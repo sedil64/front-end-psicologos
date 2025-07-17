@@ -1,14 +1,13 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, Link } from 'react-router-dom';
-import type {axiosInstance} from '../api/axios';
+import axiosInstance from '../api/axios'; // ✅ Corrección aquí
 import { useAuth } from '../context/AuthContext';
 import SuccessModal from '../components/SuccessModal';
 import { psychologistRegisterSchema } from '../schemas/psychologistRegister.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
-// 🧠 Inferimos el tipo automáticamente desde el schema
 type FormData = z.infer<typeof psychologistRegisterSchema>;
 
 export default function RegisterPsychologist() {
@@ -29,7 +28,7 @@ export default function RegisterPsychologist() {
       const payload = {
         ...data,
         role: 'psicologo' as const,
-        fechaNacimiento: new Date(data.fechaNacimiento).toISOString(), // ✅ convertir string a ISO
+        fechaNacimiento: new Date(data.fechaNacimiento).toISOString(),
       };
 
       await axiosInstance.post('/psicologos/register', payload);
@@ -38,6 +37,7 @@ export default function RegisterPsychologist() {
         email: data.email,
         password: data.password,
       });
+
       if (!ok) throw new Error('Login tras registro falló');
       setShowModal(true);
     } catch (error) {
@@ -66,23 +66,7 @@ export default function RegisterPsychologist() {
         onSubmit={handleSubmit(onSubmit)}
         className="grid grid-cols-1 md:grid-cols-2 gap-6"
       >
-        {[
-          { name: 'nombres', label: 'Nombres' },
-          { name: 'apellidos', label: 'Apellidos' },
-          { name: 'email', label: 'Email', type: 'email' },
-          { name: 'password', label: 'Contraseña', type: 'password' },
-          { name: 'identificacion', label: 'Identificación' },
-          { name: 'fechaNacimiento', label: 'Fecha de Nacimiento', type: 'date' },
-          { name: 'telefono', label: 'Teléfono' },
-          { name: 'telefonoEmergencia', label: 'Teléfono emergencia' },
-          { name: 'correoElectronico', label: 'Correo personal', type: 'email' },
-          { name: 'direccion', label: 'Dirección' },
-          { name: 'licencia', label: 'Licencia' },
-          { name: 'especialidad', label: 'Especialidad' },
-          { name: 'universidad', label: 'Universidad' },
-          { name: 'experiencia', label: 'Años de experiencia', type: 'number' },
-          { name: 'certificaciones', label: 'Certificaciones' },
-        ].map(({ name, label, type = 'text' }) => (
+        {[...].map(({ name, label, type = 'text' }) => (
           <div key={name}>
             <label className="block mb-1 text-sm font-medium">{label}</label>
             <input

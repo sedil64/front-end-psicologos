@@ -1,5 +1,5 @@
-import  { useEffect, useState } from 'react';
-import type {axiosInstance} from '../api/axios';
+import { useEffect, useState } from 'react';
+import axiosInstance from '../api/axios'; // ✅ Importación correcta
 
 interface Cita {
   id: number;
