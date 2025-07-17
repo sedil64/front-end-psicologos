@@ -1,6 +1,13 @@
 import { useEffect, useState } from 'react';
-import axiosInstance from '../api/axios'; // ✅ ruta relativa correcta
-import type { AxiosResponse } from 'axios'; // ✅ opcional, o puedes dejar que infiera
+import axiosInstance from '../api/axios';
+
+interface Psicologo {
+  id: number;
+  nombres: string;
+  apellidos: string;
+  especialidad: string;
+  fotoUrl?: string;
+}
 
 interface Cita {
   id: number;
@@ -8,6 +15,7 @@ interface Cita {
   fecha: string;
   hora: string;
   estado: string;
+  psicologo: Psicologo; // asegúrate de que venga el psicólogo en la cita
 }
 
 interface Paciente {
@@ -17,6 +25,7 @@ interface Paciente {
 }
 
 export function usePsicologos() {
+  const [psicologos, setPsicologos] = useState<Psicologo[]>([]);
   const [citas, setCitas] = useState<Cita[]>([]);
   const [pacientes, setPacientes] = useState<Paciente[]>([]);
   const [loading, setLoading] = useState(true);
@@ -25,10 +34,12 @@ export function usePsicologos() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const [citasRes, pacientesRes] = await Promise.all([
+        const [psicologosRes, citasRes, pacientesRes] = await Promise.all([
+          axiosInstance.get<Psicologo[]>('/psicologos'),
           axiosInstance.get<Cita[]>('/psicologos/me/citas'),
           axiosInstance.get<Paciente[]>('/psicologos/me/pacientes'),
         ]);
+        setPsicologos(psicologosRes.data);
         setCitas(citasRes.data);
         setPacientes(pacientesRes.data);
       } catch (err: any) {
@@ -43,6 +54,7 @@ export function usePsicologos() {
   }, []);
 
   return {
+    psicologos,
     citas,
     pacientes,
     loading,
