@@ -10,7 +10,7 @@ export default function Header() {
   return (
     <>
       <header className="bg-teal-600 text-white px-6 py-4 flex items-center justify-between flex-wrap gap-y-4 shadow">
-        <h1 className="text-xl font-bold">Psicólogos App 🧠</h1>
+        <h1 className="text-xl font-bold">Insightia  🧠</h1>
 
         <nav className="flex items-center gap-2 flex-wrap text-sm">
           <Link to="/" className="hover:underline">Inicio</Link>

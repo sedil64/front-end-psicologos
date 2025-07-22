@@ -14,7 +14,6 @@ import RegisterPatient      from './pages/RegisterPatient';
 
 // Pages – Privadas
 import AdminDashboard        from './pages/AdminDashboard';
-import PsychologistPanel     from './pages/PsychologistPanel';
 import PsychologistDashboard from './pages/PsychologistDashboard';
 import PatientHome           from './pages/PatientHome';
 import AgendarCita           from './pages/PatientAppointment';
@@ -52,14 +51,6 @@ export default function AppRoutes() {
       />
 
       {/* Psicólogo */}
-      <Route
-        path="/psychologist/panel"
-        element={
-          <RequireAuth role="psicologo">
-            <PsychologistPanel />
-          </RequireAuth>
-        }
-      />
       <Route
         path="/dashboard/psicologo"
         element={
