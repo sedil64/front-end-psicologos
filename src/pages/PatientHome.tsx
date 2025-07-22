@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axiosInstance from '../api/axios';
 import { useAuth } from '../context/AuthContext';
 
@@ -21,7 +21,7 @@ export default function PsychologistPanel() {
   const [pacientes, setPacientes] = useState<Paciente[]>([]);
 
   useEffect(() => {
-    if (!userId || role !== 'PSICOLOGO') return;
+    if (!userId || role !== 'psicologo') return;
 
     // Fetch sesiones próximas (ejemplo: citas confirmadas futuras)
     const fetchSesiones = async () => {

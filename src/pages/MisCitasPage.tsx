@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axiosInstance from '../api/axios';
 import SimpleSuccessModal from '../components/SimpleSuccessModal';
-import { Paciente } from '../types';
+import type { Paciente } from '../types';
 
 
 interface Cita {

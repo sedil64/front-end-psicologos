@@ -1,11 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-export function AgendarCita({ token, psicologoId }) {
-  const [disponibilidades, setDisponibilidades] = useState([]);
+interface AgendarCitaProps {
+  token: string;
+  psicologoId: number;
+}
+
+interface Disponibilidad {
+  id: number;
+  fecha: string;
+  horaInicio: string;
+  horaFin: string;
+}
+
+export function AgendarCita({ token, psicologoId }: AgendarCitaProps) {
+  const [disponibilidades, setDisponibilidades] = useState<Disponibilidad[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const [nombreCliente, setNombreCliente] = useState('');
-  const [selectedDisponibilidadId, setSelectedDisponibilidadId] = useState(null);
+  const [selectedDisponibilidadId, setSelectedDisponibilidadId] = useState<number | null>(null);
   const [mensaje, setMensaje] = useState('');
 
   useEffect(() => {
@@ -16,7 +28,7 @@ export function AgendarCita({ token, psicologoId }) {
         if (!res.ok) throw new Error('Error al cargar disponibilidades');
         return res.json();
       })
-      .then(data => {
+      .then((data: Disponibilidad[]) => {
         setDisponibilidades(data);
         setLoading(false);
       })
@@ -47,7 +59,7 @@ export function AgendarCita({ token, psicologoId }) {
         if (!res.ok) throw new Error('Error al agendar la cita');
         return res.json();
       })
-      .then(data => {
+      .then(() => {
         setMensaje('Cita agendada con éxito!');
         // Opcional: actualizar lista o limpiar selección
         setSelectedDisponibilidadId(null);
@@ -74,7 +86,7 @@ export function AgendarCita({ token, psicologoId }) {
 
       <h4>Selecciona una disponibilidad:</h4>
       <ul>
-        {disponibilidades.map(d => (
+        {disponibilidades.map((d) => (
           <li key={d.id}>
             <label>
               <input
