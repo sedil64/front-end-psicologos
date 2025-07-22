@@ -5,21 +5,21 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import RequireAuth from './components/RequireAuth';
 
 // Pages – Públicas
-import Home                 from './pages/Home';
-import Login                from './pages/Login';
-import Services             from './pages/Services';
-import JoinUsPage           from './pages/JoinUsPage';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Services from './pages/Services';
+import JoinUsPage from './pages/JoinUsPage';
 import RegisterPsychologist from './pages/RegisterPsychologist';
-import RegisterPatient      from './pages/RegisterPatient';
+import RegisterPatient from './pages/RegisterPatient';
 
 // Pages – Privadas
-import AdminDashboard        from './pages/AdminDashboard';
+import AdminDashboard from './pages/AdminDashboard';
 import PsychologistDashboard from './pages/PsychologistDashboard';
-import PatientHome           from './pages/PatientHome';
-import AgendarCita           from './pages/PatientAppointment';
-import MisCitasPage          from './pages/MisCitasPage';
+import PatientHome from './pages/PatientHome';
+import AgendarCita from './pages/PatientAppointment';
+import MisCitasPage from './pages/MisCitasPage';
 
-// Nuevo: Directorio y agendamiento
+// Directorio y agendamiento público
 import PsicologosPage from './pages/PsychologistPage';
 import PsicologoDisponibilidadPage from './pages/PsicologoDisponibilidadPage';
 
@@ -30,13 +30,16 @@ export default function AppRoutes() {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/services" element={<Services />} />
+      <Route path="/join-us" element={<JoinUsPage />} />
       <Route path="/register/psychologist" element={<RegisterPsychologist />} />
       <Route path="/register/patient" element={<RegisterPatient />} />
-      <Route path="/join-us" element={<JoinUsPage />} />
 
-      {/* Directorio y disponibilidad */}
+      {/* Directorio y disponibilidad (públicas) */}
       <Route path="/psicologos" element={<PsicologosPage />} />
-      <Route path="/psicologos/:id/disponibilidad" element={<PsicologoDisponibilidadPage />} />
+      <Route
+        path="/psicologos/:id/disponibilidad"
+        element={<PsicologoDisponibilidadPage />}
+      />
 
       {/* ---------- RUTAS PRIVADAS POR ROL ---------- */}
 
@@ -69,7 +72,16 @@ export default function AppRoutes() {
           </RequireAuth>
         }
       />
-      <Route path="/agendar" element={<AgendarCita />} />
+
+      <Route
+        path="/agendar"
+        element={
+          <RequireAuth role="paciente">
+            <AgendarCita />
+          </RequireAuth>
+        }
+      />
+
       <Route
         path="/mis-citas"
         element={
@@ -79,7 +91,7 @@ export default function AppRoutes() {
         }
       />
 
-      {/* Fallback: redirige al login */}
+      {/* Fallback */}
       <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
   );
