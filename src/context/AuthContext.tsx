@@ -16,10 +16,17 @@ interface JwtPayload {
   role: Role;
 }
 
+interface User {
+  id: number;
+  email: string;
+  role: Role;
+}
+
 interface AuthState {
   token: string | null;
   role: Role | null;
   userId: number | null;
+  user: User | null;
   isAuthenticated: boolean;
   login: (creds: { email: string; password: string }) => Promise<boolean>;
   logout: () => void;
@@ -31,16 +38,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState<string | null>(() => localStorage.getItem('token'));
   const [role, setRole] = useState<Role | null>(null);
   const [userId, setUserId] = useState<number | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     if (!token) return;
+
     try {
-      const { sub, role }: JwtPayload = jwtDecode(token);
+      const { sub, email, role }: JwtPayload = jwtDecode(token);
       setRole(role);
       setUserId(sub);
+      setUser({ id: sub, email, role });
     } catch {
       localStorage.removeItem('token');
       setToken(null);
+      setUser(null);
     }
   }, [token]);
 
@@ -51,9 +62,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       localStorage.setItem('token', accessToken);
       setToken(accessToken);
 
-      const { sub, role }: JwtPayload = jwtDecode(accessToken);
+      const { sub, email: decodedEmail, role }: JwtPayload = jwtDecode(accessToken);
       setRole(role);
       setUserId(sub);
+      setUser({ id: sub, email: decodedEmail, role });
+
       return true;
     } catch (err) {
       console.error('Login error:', err);
@@ -66,12 +79,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setToken(null);
     setRole(null);
     setUserId(null);
+    setUser(null);
   };
 
   const isAuthenticated = Boolean(token);
 
   return (
-    <AuthContext.Provider value={{ token, role, userId, isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ token, role, userId, user, isAuthenticated, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

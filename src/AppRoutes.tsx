@@ -17,24 +17,31 @@ import AdminDashboard        from './pages/AdminDashboard';
 import PsychologistPanel     from './pages/PsychologistPanel';
 import PsychologistDashboard from './pages/PsychologistDashboard';
 import PatientHome           from './pages/PatientHome';
+import AgendarCita           from './pages/PatientAppointment';
+import MisCitasPage          from './pages/MisCitasPage';
 
 // Nuevo: Directorio y agendamiento
-import PsychologistDirectory from './pages/PsychologistDirectory';
+import PsicologosPage from './pages/PsychologistPage';
+import PsicologoDisponibilidadPage from './pages/PsicologoDisponibilidadPage';
 
 export default function AppRoutes() {
   return (
     <Routes>
-      {/** ---------- RUTAS PÚBLICAS ---------- */}
-      <Route path="/"               element={<Home />} />
-      <Route path="/login"          element={<Login />} />
-      <Route path="/services"       element={<Services />} />
+      {/* ---------- RUTAS PÚBLICAS ---------- */}
+      <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/services" element={<Services />} />
       <Route path="/register/psychologist" element={<RegisterPsychologist />} />
-      <Route path="/register/patient"      element={<RegisterPatient />} />
-      <Route path="/join-us"               element={<JoinUsPage />} />
+      <Route path="/register/patient" element={<RegisterPatient />} />
+      <Route path="/join-us" element={<JoinUsPage />} />
 
-      {/** ---------- RUTAS PRIVADAS POR ROL ---------- */}
+      {/* Directorio y disponibilidad */}
+      <Route path="/psicologos" element={<PsicologosPage />} />
+      <Route path="/psicologos/:id/disponibilidad" element={<PsicologoDisponibilidadPage />} />
 
-      {/** Admin */}
+      {/* ---------- RUTAS PRIVADAS POR ROL ---------- */}
+
+      {/* Admin */}
       <Route
         path="/admin/dashboard"
         element={
@@ -44,7 +51,7 @@ export default function AppRoutes() {
         }
       />
 
-      {/** Psicólogo */}
+      {/* Psicólogo */}
       <Route
         path="/psychologist/panel"
         element={
@@ -62,7 +69,7 @@ export default function AppRoutes() {
         }
       />
 
-      {/** Paciente */}
+      {/* Paciente */}
       <Route
         path="/patient/home"
         element={
@@ -71,18 +78,17 @@ export default function AppRoutes() {
           </RequireAuth>
         }
       />
-
-      {/** Directorio de psicólogos (solo pacientes) */}
+      <Route path="/agendar" element={<AgendarCita />} />
       <Route
-        path="/psicologos"
+        path="/mis-citas"
         element={
           <RequireAuth role="paciente">
-            <PsychologistDirectory />
+            <MisCitasPage />
           </RequireAuth>
         }
       />
 
-      {/** Fallback: redirige al login */}
+      {/* Fallback: redirige al login */}
       <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
   );

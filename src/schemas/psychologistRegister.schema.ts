@@ -23,13 +23,7 @@ export const psychologistRegisterSchema = z.object({
   telefono: z.string({ required_error: 'Teléfono obligatorio' }),
   telefonoEmergencia: z.string().optional(),
 
-  correoElectronico: z
-    .string({ required_error: 'Correo personal obligatorio' })
-    .email({ message: 'Formato inválido de correo personal' }),
-
   direccion: z.string().optional(),
-
-  licencia: z.string({ required_error: 'Número de licencia obligatorio' }),
   especialidad: z.string({ required_error: 'Especialidad obligatoria' }),
 
   universidad: z.string().optional(),

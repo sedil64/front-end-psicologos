@@ -13,33 +13,18 @@ export const patientRegisterSchema = z.object({
   apellidos: z.string({ required_error: 'Los apellidos son obligatorios' }),
   identificacion: z.string({ required_error: 'La identificación es obligatoria' }),
 
-  fechaNacimiento: z.string({ required_error: 'La fecha de nacimiento es obligatoria' }),
+  fechaNacimiento: z
+    .string({ required_error: 'La fecha de nacimiento es obligatoria' })
+    .refine(val => !isNaN(Date.parse(val)), {
+      message: 'Formato de fecha inválido',
+    }),
 
   genero: z
-    .enum([
-      'Masculino',
-      'Femenino',
-      'No binario',
-      'Otro',
-      'Prefiero no decir',
-    ])
+    .enum(['Masculino', 'Femenino', 'No binario', 'Otro', 'Prefiero no decir'])
     .optional(),
 
   telefono: z.string({ required_error: 'El teléfono es obligatorio' }),
   telefonoEmergencia: z.string().optional(),
-
-  correoElectronico: z
-    .string({ required_error: 'El correo personal es obligatorio' })
-    .email({ message: 'Formato inválido de correo personal' }),
-
   direccion: z.string().optional(),
 
-  edad: z.coerce
-    .number({ required_error: 'La edad es obligatoria' })
-    .int({ message: 'Debe ser un número entero' })
-    .positive({ message: 'Debe ser un número positivo' }),
-
-  antecedentesClinicos: z.string().optional(),
-
-  activo: z.boolean().optional(),
 });

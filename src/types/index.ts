@@ -21,13 +21,13 @@ export interface Paciente {
   nombres: string;
   apellidos: string;
   identificacion: string;
-  fechaNacimiento: string; // ISO
+  fechaNacimiento: string; 
   genero?: 'MASCULINO' | 'FEMENINO' | 'OTRO';
   telefono: string;
   telefonoEmergencia?: string;
   correoElectronico: string;
   direccion?: string;
-  edad: number;
   antecedentesClinicos?: string;
   activo: boolean;
 }
+

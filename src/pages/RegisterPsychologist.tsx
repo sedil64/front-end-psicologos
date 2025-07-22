@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, Link } from 'react-router-dom';
-import axiosInstance from '../api/axios'; // ✅ Importación correcta
+import axiosInstance from '../api/axios'; 
 import { useAuth } from '../context/AuthContext';
 import SuccessModal from '../components/SuccessModal';
 import { psychologistRegisterSchema } from '../schemas/psychologistRegister.schema';
@@ -31,7 +31,8 @@ export default function RegisterPsychologist() {
         fechaNacimiento: new Date(data.fechaNacimiento).toISOString(),
       };
 
-      await axiosInstance.post('/psicologos/register', payload);
+      await axiosInstance.post('/auth/register', payload);
+
 
       const ok = await login({
         email: data.email,
@@ -42,7 +43,7 @@ export default function RegisterPsychologist() {
       setShowModal(true);
     } catch (error) {
       console.error('Error en registro o login:', error);
-      alert('Hubo un error al registrarte. Revisa la consola.');
+      alert('Hubo un error al registrarte. Intentalo mas tarde.');
     }
   };
 
@@ -75,9 +76,7 @@ export default function RegisterPsychologist() {
           { name: 'fechaNacimiento', label: 'Fecha de Nacimiento', type: 'date' },
           { name: 'telefono', label: 'Teléfono' },
           { name: 'telefonoEmergencia', label: 'Teléfono emergencia' },
-          { name: 'correoElectronico', label: 'Correo personal', type: 'email' },
           { name: 'direccion', label: 'Dirección' },
-          { name: 'licencia', label: 'Licencia' },
           { name: 'especialidad', label: 'Especialidad' },
           { name: 'universidad', label: 'Universidad' },
           { name: 'experiencia', label: 'Años de experiencia', type: 'number' },

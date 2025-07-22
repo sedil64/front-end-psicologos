@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 export default function Login() {
@@ -19,7 +19,6 @@ export default function Login() {
       return;
     }
 
-    // Redirección según rol usando valores reales del enum del backend
     if (role === 'admin') navigate('/admin/dashboard');
     else if (role === 'psicologo') navigate('/psychologist/panel');
     else if (role === 'paciente') navigate('/patient/home');
@@ -72,6 +71,29 @@ export default function Login() {
         >
           Ingresar
         </button>
+
+        {/* Sección de registro */}
+        <div className="mt-6 text-center space-y-3">
+          <p className="text-sm text-gray-700">
+            ¿Aún no tienes una cuenta?
+          </p>
+          <Link
+            to="/register/patient"
+            className="inline-block px-4 py-2 bg-teal-100 text-teal-800 font-semibold rounded-md hover:bg-teal-200 transition"
+          >
+            Registrate
+          </Link>
+
+          <p className="text-sm text-gray-700 pt-4">
+            ¿Deseas trabajar con nosotros?
+          </p>
+          <Link
+            to="/register/psychologist"
+            className="inline-block px-4 py-2 bg-purple-100 text-purple-800 font-semibold rounded-md hover:bg-purple-200 transition"
+          >
+            Registrate como psicólogo
+          </Link>
+        </div>
       </form>
     </div>
   );

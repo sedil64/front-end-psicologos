@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-// Crear instancia de Axios
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   headers: {
@@ -8,7 +7,7 @@ const axiosInstance = axios.create({
   },
 });
 
-// Interceptor de solicitud
+// Interceptor para agregar token a TODAS las solicitudes si existe
 axiosInstance.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
@@ -23,13 +22,14 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-// Interceptor de respuesta
+// Interceptor de respuesta para manejar errores 401
 axiosInstance.interceptors.response.use(
-  response => response,
+  (response) => response,
   (error) => {
     if (error.response?.status === 401) {
       console.warn('Token inválido o expirado');
       localStorage.removeItem('token');
+      // Aquí podrías redirigir a login o mostrar una alerta
     }
     return Promise.reject(error);
   }
