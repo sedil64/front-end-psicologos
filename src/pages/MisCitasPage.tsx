@@ -3,6 +3,7 @@ import axiosInstance from '../api/axios';
 import SimpleSuccessModal from '../components/SimpleSuccessModal';
 import { Paciente } from '../types';
 
+
 interface Cita {
   id: number;
   fecha: string;
@@ -13,6 +14,7 @@ interface Cita {
   // ...otros campos según tu modelo
 }
 
+export default function MisCitasPage() {
   const [citas, setCitas] = useState<Cita[]>([]);
   const [mensaje, setMensaje] = useState('');
   const [showSuccess, setShowSuccess] = useState(false);
