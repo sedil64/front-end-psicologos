@@ -8,9 +8,15 @@ interface Cita {
   fecha: string;
   hora: string;
   estado: string;
-  paciente?: { nombres: string; apellidos: string };
-  psicologo?: { nombre?: string; id: number };
-  // ...otros campos según tu modelo
+  paciente?: {
+    id: number;
+    nombres: string;
+    apellidos: string;
+  };
+  psicologo?: {
+    id: number;
+    nombre?: string;
+  };
 }
 
 export default function MisCitasPage() {
@@ -26,19 +32,26 @@ export default function MisCitasPage() {
           axiosInstance.get<Cita[]>('/citas'),
           axiosInstance.get<Paciente>('/pacientes/me'),
         ]);
-        setCitas(citasRes.data);
-        setPaciente(pacienteRes.data);
+
+        const currentPaciente = pacienteRes.data;
+        setPaciente(currentPaciente);
+
+        // Filtramos solo las citas de este paciente
+        const misCitas = citasRes.data.filter(
+          c => c.paciente?.id === currentPaciente.id
+        );
+        setCitas(misCitas);
       } catch (error) {
         console.error(error);
         setMensaje('Error cargando datos. Intenta de nuevo más tarde.');
       }
     };
+
     fetchData();
   }, []);
 
   const cancelarCita = async (id: number) => {
     if (!window.confirm('¿Seguro que deseas cancelar esta cita?')) return;
-
     try {
       await axiosInstance.patch(`/citas/${id}`, { estado: 'Cancelada' });
       setCitas(prev =>
@@ -53,7 +66,6 @@ export default function MisCitasPage() {
   };
 
   if (mensaje && !citas.length && paciente === null) {
-    // Mensaje de error crítico al cargar datos
     return <p className="p-4 text-red-600">{mensaje}</p>;
   }
 
@@ -129,12 +141,6 @@ export default function MisCitasPage() {
                   <p>
                     <strong>Psicólogo:</strong>{' '}
                     {cita.psicologo.nombre || cita.psicologo.id}
-                  </p>
-                )}
-                {cita.paciente && (
-                  <p>
-                    <strong>Paciente:</strong>{' '}
-                    {cita.paciente.nombres} {cita.paciente.apellidos}
                   </p>
                 )}
               </div>
