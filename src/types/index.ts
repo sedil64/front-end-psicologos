@@ -3,7 +3,8 @@ export interface Psicologo {
   nombres: string;
   apellidos: string;
   especialidad: string;
-  // si quieres puedes añadir más campos: licencia, universidad, etc.
+  foto?: string; 
+
 }
 
 export interface Cita {
