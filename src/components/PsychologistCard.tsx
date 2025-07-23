@@ -9,10 +9,10 @@ interface Props {
 }
 
 const defaultAvatars = [
-  '/images/avatar1.png',
-  '/images/avatar2.png',
-  '/images/avatar3.png',
-  '/images/avatar4.png',
+  '/images/avatar1.jpg',
+  '/images/avatar2.jpg',
+  '/images/avatar3.jpg',
+  '/images/avatar4.jpg',
 ];
 
 const getDefaultPhoto = (id: number) => {
