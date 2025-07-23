@@ -21,7 +21,7 @@ export default function Footer() {
 
         <div className="border-t border-teal-700 pt-4 text-center">
           <p className="text-sm text-teal-300">
-            © {new Date().getFullYear()} Psicólogos App. Todos los derechos reservados.
+            © {new Date().getFullYear()} Insightia. Todos los derechos reservados.
           </p>
           <Link
             to="/join-us"

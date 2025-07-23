@@ -24,18 +24,6 @@ export default function WhyUsSection() {
             </div>
           ))}
         </div>
-
-        <div className="mt-16 flex flex-col md:flex-row items-center justify-center gap-12">
-          <div className="text-center">
-            <span className="text-5xl font-bold text-teal-700">+500</span>
-            <p className="text-gray-600 mt-2">pacientes ayudados</p>
-          </div>
-          <div className="text-center">
-            <span className="text-5xl font-bold text-teal-700">4.9⭐</span>
-            <p className="text-gray-600 mt-2">en satisfacción</p>
-          </div>
-        </div>
-
         <blockquote className="mt-16 text-center italic text-gray-600 max-w-2xl mx-auto">
           “Me sentí escuchado y acompañado desde la primera sesión. ¡Gracias por ayudarme a recuperar mi bienestar!”
         </blockquote>
