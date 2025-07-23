@@ -2,38 +2,41 @@ import { FaUserMd, FaLaptop, FaClock, FaLock } from 'react-icons/fa';
 
 export default function WhyUsSection() {
   return (
-    <section className="py-16 bg-white">
-      <div className="max-w-5xl mx-auto px-4">
-        <h2 className="text-2xl font-bold text-center mb-8 text-teal-800">¿Por qué elegirnos?</h2>
+    <section className="py-24 bg-white">
+      <div className="max-w-6xl mx-auto px-6">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-teal-800">
+          ¿Por qué elegirnos?
+        </h2>
+
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
-          <div>
-            <FaUserMd className="mx-auto text-3xl text-teal-600 mb-2" />
-            <h3 className="font-semibold">Psicólogos certificados</h3>
+          {[
+            { icon: <FaUserMd />, label: 'Psicólogos certificados' },
+            { icon: <FaLaptop />, label: 'Sesiones 100% online' },
+            { icon: <FaClock />, label: 'Horarios flexibles' },
+            { icon: <FaLock />, label: 'Privacidad garantizada' },
+          ].map((item, i) => (
+            <div
+              key={i}
+              className="bg-teal-50 p-6 rounded-xl shadow-md hover:shadow-lg transition"
+            >
+              <div className="text-4xl text-teal-600 mb-4">{item.icon}</div>
+              <h3 className="text-lg font-semibold text-teal-800">{item.label}</h3>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-16 flex flex-col md:flex-row items-center justify-center gap-12">
+          <div className="text-center">
+            <span className="text-5xl font-bold text-teal-700">+500</span>
+            <p className="text-gray-600 mt-2">pacientes ayudados</p>
           </div>
-          <div>
-            <FaLaptop className="mx-auto text-3xl text-teal-600 mb-2" />
-            <h3 className="font-semibold">Sesiones 100% online</h3>
-          </div>
-          <div>
-            <FaClock className="mx-auto text-3xl text-teal-600 mb-2" />
-            <h3 className="font-semibold">Horarios flexibles</h3>
-          </div>
-          <div>
-            <FaLock className="mx-auto text-3xl text-teal-600 mb-2" />
-            <h3 className="font-semibold">Privacidad garantizada</h3>
+          <div className="text-center">
+            <span className="text-5xl font-bold text-teal-700">4.9⭐</span>
+            <p className="text-gray-600 mt-2">en satisfacción</p>
           </div>
         </div>
-        <div className="mt-8 flex flex-col md:flex-row items-center justify-center gap-8">
-          <div className="text-center">
-            <span className="text-3xl font-bold text-teal-700">+500</span>
-            <p>pacientes ayudados</p>
-          </div>
-          <div className="text-center">
-            <span className="text-3xl font-bold text-teal-700">4.9⭐</span>
-            <p>en satisfacción</p>
-          </div>
-        </div>
-        <blockquote className="mt-8 italic text-gray-600 text-center max-w-xl mx-auto">
+
+        <blockquote className="mt-16 text-center italic text-gray-600 max-w-2xl mx-auto">
           “Me sentí escuchado y acompañado desde la primera sesión. ¡Gracias por ayudarme a recuperar mi bienestar!”
         </blockquote>
       </div>

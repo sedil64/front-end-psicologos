@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import LoginModal from './LoginModal'; // Asegúrate que la ruta sea correcta
+import LoginModal from './LoginModal';
 
 export default function Header() {
   const { isAuthenticated, role, logout } = useAuth();
@@ -9,57 +9,59 @@ export default function Header() {
 
   return (
     <>
-      <header className="bg-teal-600 text-white px-6 py-4 flex items-center justify-between flex-wrap gap-y-4 shadow">
-        <h1 className="text-xl font-bold">Insightia  🧠</h1>
+      <header className="bg-teal-900 text-white shadow-md py-4 px-6">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+          <h1 className="text-2xl font-bold tracking-tight">Insightia 🧠</h1>
 
-        <nav className="flex items-center gap-2 flex-wrap text-sm">
-          <Link to="/" className="hover:underline">Inicio</Link>
-          <Link to="/services" className="hover:underline">Servicios</Link>
-          <Link to="/psicologos" className="hover:underline">Psicólogos</Link>
+          <nav className="flex flex-wrap items-center gap-4 text-sm font-medium">
+            <Link to="/" className="hover:text-teal-300 transition">Inicio</Link>
+            <Link to="/services" className="hover:text-teal-300 transition">Servicios</Link>
+            <Link to="/psicologos" className="hover:text-teal-300 transition">Psicólogos</Link>
 
-          {!isAuthenticated ? (
-            <div className="flex gap-2">
-              <button
-                type="button"
-                onClick={() => setShowLoginModal(true)}
-                className="px-4 py-2 text-teal-600 bg-white rounded-md font-bold transition hover:bg-teal-100 hover:scale-105"
-              >
-                Ingresar
-              </button>
-              <Link
-                to="/register/patient"
-                className="px-4 py-2 text-teal-600 bg-white rounded-md font-bold transition hover:bg-teal-100 hover:scale-105"
-              >
-                Registrarse
-              </Link>
-            </div>
-          ) : (
-            <div className="flex items-center gap-2">
-              {role === 'admin' && (
-                <Link to="/admin/dashboard" className="hover:underline">
-                  Panel Admin
+            {!isAuthenticated ? (
+              <>
+                <button
+                  type="button"
+                  onClick={() => setShowLoginModal(true)}
+                  className="bg-white text-teal-900 px-4 py-2 rounded-md font-semibold hover:bg-teal-100 transition"
+                >
+                  Ingresar
+                </button>
+                <Link
+                  to="/register/patient"
+                  className="bg-white text-teal-900 px-4 py-2 rounded-md font-semibold hover:bg-teal-100 transition"
+                >
+                  Registrarse
                 </Link>
-              )}
-              {role === 'psicologo' && (
-                <Link to="/dashboard/psicologo" className="hover:underline">
-                  Panel Psicólogo
-                </Link>
-              )}
-              {role === 'paciente' && (
-                <Link to="/mis-citas" className="hover:underline">
-                  Mis Citas
-                </Link>
-              )}
-              <button
-                type="button"
-                onClick={logout}
-                className="px-4 py-2 text-teal-600 bg-white rounded-md font-bold transition hover:bg-teal-100 hover:scale-105"
-              >
-                Cerrar sesión
-              </button>
-            </div>
-          )}
-        </nav>
+              </>
+            ) : (
+              <>
+                {role === 'admin' && (
+                  <Link to="/admin/dashboard" className="hover:text-teal-300 transition">
+                    Panel Admin
+                  </Link>
+                )}
+                {role === 'psicologo' && (
+                  <Link to="/dashboard/psicologo" className="hover:text-teal-300 transition">
+                    Panel Psicólogo
+                  </Link>
+                )}
+                {role === 'paciente' && (
+                  <Link to="/mis-citas" className="hover:text-teal-300 transition">
+                    Mis Citas
+                  </Link>
+                )}
+                <button
+                  type="button"
+                  onClick={logout}
+                  className="bg-white text-teal-900 px-4 py-2 rounded-md font-semibold hover:bg-teal-100 transition"
+                >
+                  Cerrar sesión
+                </button>
+              </>
+            )}
+          </nav>
+        </div>
       </header>
 
       {showLoginModal && <LoginModal close={() => setShowLoginModal(false)} />}
